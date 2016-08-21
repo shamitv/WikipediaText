@@ -57,9 +57,11 @@ public class FragmentProcessor implements Runnable {
 			transformer.transform(source, new StreamResult(articleFile));
 		}
 		if(textOut!=null){
-			ArticleTextExtractor extract = new ArticleTextExtractor();
-			String text=extract.getPlainText(data);
-			textOut.println(text);
+			if(data.getText()!=null){
+				ArticleTextExtractor extract = new ArticleTextExtractor();
+				String text=extract.getPlainText(data);
+				textOut.println(text);				
+			}
 		}
 	}
 

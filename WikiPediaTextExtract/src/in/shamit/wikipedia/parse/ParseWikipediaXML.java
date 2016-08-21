@@ -29,7 +29,7 @@ public class ParseWikipediaXML {
 	PrintWriter textOut;
 	XMLFragmenlHolder xml = null;  
 	int fragCount=0;
-	int maxThread = 400;
+	int maxThread = 500;
 	ExecutorService service = Executors.newFixedThreadPool(maxThread);
 	BoundedExecutor exec=new BoundedExecutor(service, maxThread);
 		
@@ -102,7 +102,8 @@ public class ParseWikipediaXML {
 
 	private void cleanup() {
 		service.shutdown();
-		out.flush();
+		out.close();
+		textOut.close();
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -113,9 +114,10 @@ public class ParseWikipediaXML {
 		if(args.length>1){
 			bz2path = args[0];
 			csvPath = args[1];
+			textPath = args[2]; 
 		}
-		if(args.length>2){
-			articlePath=args[2];
+		if(args.length>3){
+			articlePath=args[3];
 		}
 		ParseWikipediaXML parser = new ParseWikipediaXML(bz2path,csvPath,articlePath,textPath);
 		System.out.println(parser.xmlPath);
